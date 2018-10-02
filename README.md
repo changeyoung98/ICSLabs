@@ -1,2 +1,2 @@
-# ICSLabs
-Iterations of web
+# Web Projects
+Tutorial projets given by teachers & Iterations of web
