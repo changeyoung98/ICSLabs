@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        
+<hibernate-mapping package="Sample.Entity">    
+    <class name="Fruit" table="FRUITS"> 
+        <id name="uid" column="UID"> </id>
+        <property name="shape"/> 
+        <property name="flavor"/> 
+        <property name="color"/> 
+        <union-subclass name="Apple" table="APPLES">
+           <property name="weight"/>
+        </union-subclass>
+    </class>     
+</hibernate-mapping>
+ 

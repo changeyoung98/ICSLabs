@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+        
+<hibernate-mapping package="Sample.Entity">    
+    <class name="Cat" table="CATS"> 
+        <id name="uid" column="UID"></id> 
+        <property name="birthday" type="date"/> 
+        <property name="color"/> 
+        <property name="sex"/> 
+        <property name="weight"/>        
+        <joined-subclass name="DomesticCat" table="DOMESTIC_CATS">
+           <key column="CAT"/> 
+           <property name="name" type="string"/> 
+        </joined-subclass> 
+    </class>     
+</hibernate-mapping>
+ 
