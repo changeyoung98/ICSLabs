@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>JSON Object Model Example</title>
+</head>
+<body>
+
+	<script type="text/javascript">
+		var xmlHttpRequest = null;
+		var console = "";
+
+		function ajaxRequest() {
+			if (window.ActiveXObject) {
+				xmlHttpRequest = new ActionXObject("Microsoft.XMLHTTP");
+			} else if (window.XMLHttpRequest) {
+				xmlHttpRequest = new XMLHttpRequest();
+			}
+
+			if (xmlHttpRequest != null) {
+
+				var infoMsg = new Object();
+				
+				infoMsg.firstname = document.getElementById("firstname").value;
+				infoMsg.lastname = document.getElementById("lastname").value;
+				infoMsg.age = document.getElementById("age").value;
+				infoMsg.streetAddress = document.getElementById("streetAddress").value;
+				infoMsg.city = document.getElementById("city").value;
+				infoMsg.state = document.getElementById("state").value;
+				infoMsg.postalCode = document.getElementById("postalCode").value;
+				
+				var phone = new Object();
+				var phoneType1 = document.getElementById("phoneType1").options[document.getElementById("phoneType1").selectedIndex].text;
+				var phoneNumber1 = document.getElementById("phoneNumber1").value;	
+				phone[phoneType1] = phoneNumber1;				
+				var phoneType2 = document.getElementById("phoneType2").options[document.getElementById("phoneType2").selectedIndex].text;
+				var phoneNumber2 = document.getElementById("phoneNumber2").value;	
+				phone[phoneType2] = phoneNumber2;				
+			
+				infoMsg.phoneNumbers = phone;				
+				
+				/* Convert the message to JSON */
+				var jsonstr = JSON.stringify(infoMsg);
+				
+	            
+	            xmlHttpRequest.open("POST","JsonServlet",true);
+	            xmlHttpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	            xmlHttpRequest.onreadystatechange = ajaxCall; 
+	            xmlHttpRequest.send("content=" + jsonstr);
+	            
+				console += "Sent: " + jsonstr + "\n";
+				document.getElementById("textarea").innerHTML = console; 
+			}
+		}
+
+		function ajaxCall() {
+			if (xmlHttpRequest.readyState == 4) {
+				if (xmlHttpRequest.status == 200) {
+					var text = xmlHttpRequest.responseText;
+					console += "Received: " + text + "\n";
+					document.getElementById("textarea").innerHTML = console;
+				}
+			}
+		}
+	</script>
+
+	<h1>JSON Object Model</h1>
+	<h2>Enter your information</h2>
+	<form action="" style="margin-top: 15px;">
+		<table>
+			<tr>
+				<td align="right">First Name:</td>
+				<td><input type="text" name="firstname" id="firstname" size=20 /></td>
+			</tr>
+			<tr>
+				<td align="right">Last Name:</td>
+				<td><input type="text" name="lasttname" id="lastname" size=20 /></td>
+			</tr>
+			<tr>
+				<td align="right">Age:</td>
+				<td><input type="text" name="age" id="age" size=20 /></td>
+			</tr>
+			<tr>
+				<td align="right">Street Address:</td>
+				<td><input type="text" name="streetAddress" id="streetAddress"
+					size=20 /></td>
+			</tr>
+			<tr>
+				<td align="right">City:</td>
+				<td><input type="text" name="city" id="city" size=20 /></td>
+			</tr>
+			<tr>
+				<td align="right">State:</td>
+				<td><input type="text" name="state" id="state" size=20 /></td>
+			</tr>
+			<tr>
+				<td align="right">ZIP code:</td>
+				<td><input type="text" name="postalCode" id="postalCode"
+					size=20 /></td>
+			</tr>
+			<tr>
+				<td align="right">Phone Number 1:</td>
+				<td>
+					<input type="text" name="phoneNumber1" id="phoneNumber1" size=20 /> 
+					<select name="phoneType1" id="phoneType1"
+					style="font-family: Verdana, Arial, Helvetica, sans-serif;">
+						<option value="Home">Home</option>
+						<option value="Mobile">Mobile</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">Phone Number 2:</td>
+				<td>
+					<input type="text" name="phoneNumber2" id="phoneNumber2" size=20 /> 
+					<select name="phoneType2" id="phoneType2"
+					style="font-family: Verdana, Arial, Helvetica, sans-serif;">
+						<option value="Home">Home</option>
+						<option value="Mobile">Mobile</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+		<p>
+			<button type="button" onclick="ajaxRequest()">Create a JSON Object</button>
+		</p>		
+		<textarea id="textarea" cols="70" rows="20"></textarea>
+	</form>
+
+</body>
+</html>
+
